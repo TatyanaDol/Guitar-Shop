@@ -1,21 +1,31 @@
 import { useEffect } from 'react';
 import {fetchGuitarsAction} from '../../store/api-action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import {getGuitars} from '../../store/guitars-data-process/selectors';
+import {getGuitars, getGuitarsDataLoadedStatus} from '../../store/guitars-data-process/selectors';
 import GuitarsCardsList from '../guitars-cards-list/guitars-cards-list';
+import { getTotalGuitarsCount } from '../../store/site-process/selector';
+import Pagination from '../pagination/pagination';
+import { useParams } from 'react-router-dom';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function GuitarsCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  useEffect( () => {
-
-    dispatch(fetchGuitarsAction());
-
-  }, []);
+  const {slug} = useParams();
 
   const guitarsList = useAppSelector(getGuitars);
+  const isGuitarsDataLoaded = useAppSelector(getGuitarsDataLoadedStatus);
+  const totalGuitarsCount = useAppSelector(getTotalGuitarsCount);
+
+  useEffect( () => {
+
+    dispatch(fetchGuitarsAction(slug));
+
+
+  }, [slug]);
+
 
   return (
     <main className="page-content">
@@ -91,20 +101,16 @@ function GuitarsCatalog(): JSX.Element {
             </div>
           </div>
 
-          <GuitarsCardsList guitars={guitarsList} />
+          {
+            !isGuitarsDataLoaded ? <LoadingScreen />
+              :
+              <>
+                <GuitarsCardsList guitars={guitarsList} />
 
-          <div className="pagination page-content__pagination">
-            <ul className="pagination__list">
-              <li className="pagination__page pagination__page--active"><a className="link pagination__page-link" href="1">1</a>
-              </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="2">2</a>
-              </li>
-              <li className="pagination__page"><a className="link pagination__page-link" href="3">3</a>
-              </li>
-              <li className="pagination__page pagination__page--next" id="next"><a className="link pagination__page-link" href="2">Далее</a>
-              </li>
-            </ul>
-          </div>
+                <Pagination totalGuitarsCount={totalGuitarsCount} />
+              </>
+          }
+
         </div>
       </div>
     </main>

@@ -9,4 +9,5 @@ export enum APIRoute {
 
 export enum AppRoute {
     Main = '/',
+    CatalogPage = '/catalog/page_:slug'
   }

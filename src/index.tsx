@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
 import {store} from './store/index';
-import {fetchGuitarsAction} from './store/api-action';
+// import {fetchGuitarsAction} from './store/api-action';
 
-store.dispatch(fetchGuitarsAction());
+// store.dispatch(fetchGuitarsAction());
 
 ReactDOM.render(
   <React.StrictMode>
