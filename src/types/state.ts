@@ -1,9 +1,11 @@
 import {store} from '../store/index';
-import {GuitarsData} from './guitar';
+import {GuitarData, GuitarsData} from './guitar';
 
 export type GuitarsDataProcess = {
     guitars: GuitarsData
     isGuitarsDataLoaded: boolean
+    oneGuitarCard: GuitarData | null
+    isOneGuitarCardDataLoaded: boolean
   };
 
 export type SiteProcess = {

@@ -1,19 +1,10 @@
+import { RATING } from '../../const';
 import {GuitarData} from '../../types/guitar';
+import RatingStar from '../rating-start/rating-star';
 
 type GuitarCardProps = {
     guitar: GuitarData
 }
-
-const STARS_COUNT = 5;
-
-const RATING = {
-  1: 'Ужасно',
-  2: 'Плохо',
-  3: 'Удовлетворительно',
-  4: 'Хорошо',
-  5: 'Отлично',
-} as const;
-
 
 function GuitarCard({guitar}: GuitarCardProps): JSX.Element {
 
@@ -23,12 +14,7 @@ function GuitarCard({guitar}: GuitarCardProps): JSX.Element {
       <img src={`/${guitar.previewImg}`} srcSet="img/content/catalog-product-0@2x.jpg 2x" width="75" height="190" alt={guitar.name} />
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {
-            Array.from({ length: STARS_COUNT }, (v, k) => k).map((_, ind) => (
-              <svg key={_} width="12" height="11" aria-hidden="true">
-                <use xlinkHref={guitar.rating >= (ind + 1) ? '#icon-full-star' : '#icon-star'}></use>
-              </svg>))
-          }
+          <RatingStar guitarRating={guitar.rating}/>
           <p className="visually-hidden">Рейтинг: {RATING[guitar.rating]}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.comments.length}</p>
         </div>

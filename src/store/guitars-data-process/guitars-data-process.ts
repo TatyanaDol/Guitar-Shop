@@ -6,6 +6,8 @@ import {GuitarsDataProcess} from '../../types/state';
 const initialState: GuitarsDataProcess = {
   guitars: [],
   isGuitarsDataLoaded: false,
+  oneGuitarCard: null,
+  isOneGuitarCardDataLoaded: false,
 };
 
 export const guitarsDataProcess = createSlice({
@@ -16,7 +18,11 @@ export const guitarsDataProcess = createSlice({
       state.guitars = action.payload;
       state.isGuitarsDataLoaded = true;
     },
+    loadOneGuitarCard: (state, action) => {
+      state.oneGuitarCard = action.payload;
+      state.isOneGuitarCardDataLoaded = true;
+    },
   },
 });
 
-export const {loadGuitars} = guitarsDataProcess.actions;
+export const {loadGuitars, loadOneGuitarCard} = guitarsDataProcess.actions;

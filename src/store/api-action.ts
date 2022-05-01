@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './index';
 import {store} from './index';
-import {loadGuitars} from './guitars-data-process/guitars-data-process';
+import {loadGuitars, loadOneGuitarCard} from './guitars-data-process/guitars-data-process';
 import { loadTotalGuitarsCount } from './site-process/site-process';
 // import { APIRoute } from '../const';
 
@@ -23,3 +23,20 @@ export const fetchGuitarsAction = createAsyncThunk(
     }
   },
 );
+
+export const fetchOneGuitarCardAction = createAsyncThunk(
+  'fetchOneGuitarCard',
+  async (guitarId: string) => {
+    // let id = 1;
+    // if(guitarId) {
+    //   id = Number(guitarId);
+    // }
+    try {
+      const {data} = await api.get(`/guitars/${guitarId}?_embed=comments`);
+      store.dispatch(loadOneGuitarCard(data));
+    } catch (error) {
+      store.dispatch(loadOneGuitarCard(null));
+    }
+  },
+);
+

@@ -1,10 +1,10 @@
-
+import { GUITAR_TYPE } from '../const';
 
 export type GuitarData = {
     id: number
     name: string
     vendorCode: string
-    type: string
+    type: keyof typeof GUITAR_TYPE
     description: string
     previewImg: string
     stringCount: number
