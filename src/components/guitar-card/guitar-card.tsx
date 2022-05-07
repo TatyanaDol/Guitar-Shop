@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { RATING } from '../../const';
 import {GuitarData} from '../../types/guitar';
 import RatingStar from '../rating-start/rating-star';
@@ -14,7 +15,7 @@ function GuitarCard({guitar}: GuitarCardProps): JSX.Element {
       <img src={`/${guitar.previewImg}`} srcSet="img/content/catalog-product-0@2x.jpg 2x" width="75" height="190" alt={guitar.name} />
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <RatingStar guitarRating={guitar.rating}/>
+          <RatingStar ratingNumber={guitar.rating}/>
           <p className="visually-hidden">Рейтинг: {RATING[guitar.rating]}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.comments.length}</p>
         </div>
@@ -22,7 +23,7 @@ function GuitarCard({guitar}: GuitarCardProps): JSX.Element {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{new Intl.NumberFormat('ru-RU').format(guitar.price)} ₽
         </p>
       </div>
-      <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+      <div className="product-card__buttons"><Link to={`/product/${guitar.id}`} className="button button--mini" >Подробнее</Link><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
       </div>
     </div>
   );

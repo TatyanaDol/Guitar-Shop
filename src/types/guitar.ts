@@ -27,3 +27,20 @@ export type CommentData = {
 }
 
 export type CommentsData = CommentData[];
+
+export type NewCommentData = {
+
+   comment: {
+    guitarId: number
+    userName: string
+    advantage: string
+    disadvantage: string
+    comment: string
+    rating: number
+   }
+   setIsSavingCb:  React.Dispatch<React.SetStateAction<boolean>>
+   setIsSuccessReviewModalOpenedCb: React.Dispatch<React.SetStateAction<boolean>>
+   setIsFormModalOpenedCb: React.Dispatch<React.SetStateAction<boolean>>
+
+
+}

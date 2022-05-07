@@ -7,6 +7,8 @@ import { getTotalGuitarsCount } from '../../store/site-process/selector';
 import Pagination from '../pagination/pagination';
 import { useParams } from 'react-router-dom';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 
 function GuitarsCatalog(): JSX.Element {
@@ -32,9 +34,9 @@ function GuitarsCatalog(): JSX.Element {
       <div className="container">
         <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
         <ul className="breadcrumbs page-content__breadcrumbs">
-          <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
+          <li className="breadcrumbs__item"><Link to={AppRoute.Main} className="link">Главная</Link>
           </li>
-          <li className="breadcrumbs__item"><a className="link">Каталог</a>
+          <li className="breadcrumbs__item"><Link to={AppRoute.Main}  className="link">Каталог</Link>
           </li>
         </ul>
         <div className="catalog">

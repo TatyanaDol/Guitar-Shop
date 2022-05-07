@@ -1,5 +1,6 @@
-import { GUITAR_TYPE, RATING} from '../../const';
+import { RATING} from '../../const';
 import { GuitarData } from '../../types/guitar';
+import ProductTabs from '../product-tabs/product-tabs';
 import RatingStar from '../rating-start/rating-star';
 
 type ProductProps = {
@@ -12,28 +13,11 @@ function Product({guitar}: ProductProps): JSX.Element {
       <div className="product-container__info-wrapper">
         <h2 className="product-container__title title title--big title--uppercase">{guitar.name}</h2>
         <div className="rate product-container__rating">
-          <RatingStar guitarRating={guitar.rating}/>
+          <RatingStar ratingNumber={guitar.rating}/>
           <p className="visually-hidden">Оценка: {RATING[guitar.rating]}</p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.comments.length}</p>
         </div>
-        <div className="tabs"><a className="button button--medium tabs__button" href="#characteristics">Характеристики</a><a className="button button--black-border button--medium tabs__button" href="#description">Описание</a>
-          <div className="tabs__content" id="characteristics">
-            <table className="tabs__table">
-              <tr className="tabs__table-row">
-                <td className="tabs__title">Артикул:</td>
-                <td className="tabs__value">{guitar.vendorCode}</td>
-              </tr>
-              <tr className="tabs__table-row">
-                <td className="tabs__title">Тип:</td>
-                <td className="tabs__value">{GUITAR_TYPE[guitar.type]}</td>
-              </tr>
-              <tr className="tabs__table-row">
-                <td className="tabs__title">Количество струн:</td>
-                <td className="tabs__value">{guitar.stringCount} струнная</td>
-              </tr>
-            </table>
-            <p className="tabs__product-description hidden">{guitar.description}</p>
-          </div>
-        </div>
+        <ProductTabs guitar={guitar} />
       </div>
       <div className="product-container__price-wrapper">
         <p className="product-container__price-info product-container__price-info--title">Цена:</p>

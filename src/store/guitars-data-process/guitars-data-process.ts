@@ -22,7 +22,12 @@ export const guitarsDataProcess = createSlice({
       state.oneGuitarCard = action.payload;
       state.isOneGuitarCardDataLoaded = true;
     },
+    loadPostedComment: (state, action) => {
+      if ( state.oneGuitarCard) {
+        state.oneGuitarCard.comments = [action.payload, ...state.oneGuitarCard.comments];
+      }
+    },
   },
 });
 
-export const {loadGuitars, loadOneGuitarCard} = guitarsDataProcess.actions;
+export const {loadGuitars, loadOneGuitarCard, loadPostedComment} = guitarsDataProcess.actions;
