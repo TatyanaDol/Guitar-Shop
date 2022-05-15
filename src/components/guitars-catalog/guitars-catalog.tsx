@@ -107,7 +107,7 @@ function GuitarsCatalog(): JSX.Element {
             !isGuitarsDataLoaded ? <LoadingScreen />
               :
               <>
-                <GuitarsCardsList guitars={guitarsList} />
+                {guitarsList[0] && <GuitarsCardsList guitars={guitarsList} />}
 
                 <Pagination totalGuitarsCount={totalGuitarsCount} />
               </>

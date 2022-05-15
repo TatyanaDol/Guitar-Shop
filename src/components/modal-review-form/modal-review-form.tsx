@@ -11,7 +11,6 @@ type ShowMoreButtonProps = {
     id: number
 }
 
-
 function ModalReviewForm({setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedCb, guitarName, id}: ShowMoreButtonProps): JSX.Element  {
   const [isSaving, setIsSaving] = useState(false);
 
@@ -129,7 +128,7 @@ function ModalReviewForm({setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedC
             <div className="form-review__wrapper">
               <div className="form-review__name-wrapper">
                 <label className="form-review__label form-review__label--required" htmlFor="user-name">Ваше Имя</label>
-                <input className="form-review__input form-review__input--name" id="user-name" name="user-name" type="text" autoComplete="off" ref={firstAutofocusRef} tabIndex={2} autoFocus/>
+                <input className="form-review__input form-review__input--name" id="user-name"  data-testid="user" name="user-name" type="text" autoComplete="off" ref={firstAutofocusRef} tabIndex={2} autoFocus/>
                 <p className="form-review__warning" style={{opacity: `${invalidName ? 1 : 0}`}}>Заполните поле</p>
               </div>
               <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
@@ -149,17 +148,17 @@ function ModalReviewForm({setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedC
               </div>
             </div>
             <label className="form-review__label form-review__label--required" htmlFor="adv">Достоинства</label>
-            <input className="form-review__input" id="adv" type="text" name="advantage" autoComplete="off" tabIndex={4}/>
+            <input className="form-review__input" id="adv" type="text" name="advantage" data-testid="advantage" autoComplete="off" tabIndex={4}/>
             <p className="form-review__warning" style={{opacity: `${invalidAdvantage ? 1 : 0}`}}>Заполните поле</p>
             <label className="form-review__label form-review__label--required" htmlFor="disadv">Недостатки</label>
-            <input className="form-review__input" id="disadv" type="text" name="disadvantage" autoComplete="off" tabIndex={5}/>
+            <input className="form-review__input" id="disadv" type="text" name="disadvantage" data-testid="disadvantage" autoComplete="off" tabIndex={5}/>
             <p className="form-review__warning" style={{opacity: `${invalidDisadvantage ? 1 : 0}`}}>Заполните поле</p>
             <label className="form-review__label form-review__label--required" htmlFor="comment">Комментарий</label>
-            <textarea className="form-review__input form-review__input--textarea" id="comment" name="comment" rows={10} autoComplete="off" tabIndex={6}></textarea>
+            <textarea className="form-review__input form-review__input--textarea" id="comment" name="comment" rows={10} data-testid="comment" autoComplete="off" tabIndex={6}></textarea>
             <p className="form-review__warning" style={{opacity: `${invalidComment ? 1 : 0}`}}>Заполните поле</p>
             <button className="button button--medium-20 form-review__button" type="submit" disabled={isSaving} tabIndex={7}>{isSaving ? <LoadingScreen /> : 'Отправить отзыв'}</button>
           </form>
-          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть" onClick={(evt) => setIsFormModalOpenedCb(false)}><span className="button-cross__icon" ref={lastAutofocusRef} tabIndex={8}></span><span className="modal__close-btn-interactive-area"></span>
+          <button className="modal__close-btn button-cross" data-testid="close" type="button" aria-label="Закрыть" onClick={(evt) => setIsFormModalOpenedCb(false)}><span className="button-cross__icon" ref={lastAutofocusRef} tabIndex={8}></span><span className="modal__close-btn-interactive-area"></span>
           </button>
           <span tabIndex={9} onFocus={(evt) => {firstAutofocusRef.current?.focus();}}/>
         </div>

@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './components/app/app';
 import {store} from './store/index';
-// import {fetchGuitarsAction} from './store/api-action';
-
-// store.dispatch(fetchGuitarsAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

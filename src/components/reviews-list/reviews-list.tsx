@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { REVIEWS_COUNT_PER_STEP } from '../../const';
 import {CommentsData} from '../../types/guitar';
+import { sortReviewsByDate } from '../../utils/utils';
 import ModalReviewForm from '../modal-review-form/modal-review-form';
 import ModalSuccessReview from '../modal-success-review/modal-success-review';
 import Review from '../review/review';
@@ -9,18 +11,6 @@ type ReviewsListProps = {
     reviews: CommentsData
     guitarName: string
     id: number
-}
-
-const REVIEWS_COUNT_PER_STEP = 3;
-
-function sortReviewsByDate(reviews: CommentsData) {
-
-  const arrayForSort = [...reviews];
-  return arrayForSort.sort((reviewA,reviewB)=> {
-    const dateA = new Date(reviewA.createAt) as unknown as number;
-    const dateB = new Date(reviewB.createAt) as unknown as number;
-    return  dateB - dateA;
-  });
 }
 
 function ReviewsList({reviews, guitarName, id}: ReviewsListProps): JSX.Element {

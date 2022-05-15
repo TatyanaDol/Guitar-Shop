@@ -1,3 +1,6 @@
+
+export const REVIEWS_COUNT_PER_STEP = 3;
+
 export enum NameSpace {
     Data = 'DATA',
     Site = 'SITE',

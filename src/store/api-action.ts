@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {api} from './index';
+import {api} from './api/api';
 import {store} from './index';
 import {loadGuitars, loadOneGuitarCard, loadPostedComment} from './guitars-data-process/guitars-data-process';
 import { loadTotalGuitarsCount } from './site-process/site-process';
