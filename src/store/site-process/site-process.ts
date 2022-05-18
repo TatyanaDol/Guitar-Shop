@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
+import {NameSpace, TOTAL_COUNT} from '../../const';
 import {SiteProcess} from '../../types/state';
 
 
@@ -12,7 +12,12 @@ export const siteProcess = createSlice({
   initialState,
   reducers: {
     loadTotalGuitarsCount: (state, action) => {
-      state.totalGuitarsCount = action.payload;
+      if(action.payload <= TOTAL_COUNT) {
+        state.totalGuitarsCount = action.payload;
+      }
+      else {
+        state.totalGuitarsCount = TOTAL_COUNT;
+      }
     },
   },
 });

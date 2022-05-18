@@ -5,6 +5,7 @@ import {loadGuitars, loadOneGuitarCard, loadPostedComment} from './guitars-data-
 import { loadTotalGuitarsCount } from './site-process/site-process';
 import { APIRoute } from '../const';
 import { NewCommentData } from '../types/guitar';
+import { handleError } from '../services/handle-error';
 
 
 export const fetchGuitarsAction = createAsyncThunk(
@@ -21,6 +22,7 @@ export const fetchGuitarsAction = createAsyncThunk(
       store.dispatch(loadTotalGuitarsCount(resultHeaders['x-total-count']));
     } catch (error) {
       store.dispatch(loadGuitars([]));
+      handleError(error);
     }
   },
 );
@@ -33,6 +35,7 @@ export const fetchOneGuitarCardAction = createAsyncThunk(
       store.dispatch(loadOneGuitarCard(data));
     } catch (error) {
       store.dispatch(loadOneGuitarCard(null));
+      handleError(error);
     }
   },
 );
@@ -48,6 +51,7 @@ export const addNewCommentAction = createAsyncThunk(
       setIsSuccessReviewModalOpenedCb(true);
     } catch(error) {
       setIsSavingCb(false);
+      handleError(error);
     }
   },
 );

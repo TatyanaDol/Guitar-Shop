@@ -96,7 +96,7 @@ function ModalReviewForm({setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedC
       setInvalidRate(false);
     }
 
-    if(!invalidName && !invalidAdvantage && !invalidDisadvantage && !invalidComment && !invalidRate) {
+    if(evt.currentTarget['user-name'].value && evt.currentTarget['advantage'].value && evt.currentTarget['disadvantage'].value && evt.currentTarget['comment'].value && evt.currentTarget['rate'].value) {
       onSubmit({
         comment: {
           guitarId: id,
