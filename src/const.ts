@@ -3,15 +3,14 @@ export const REVIEWS_COUNT_PER_STEP = 3;
 
 export const TOTAL_COUNT = 27;
 
+export const API_ROUTE = {
+  Comments: '/comments',
+} as const;
+
 export enum NameSpace {
     Data = 'DATA',
     Site = 'SITE',
   }
-
-export enum APIRoute {
-    Guitars = '/guitars',
-    Comments = '/comments',
-}
 
 export enum AppRoute {
     Main = '/',

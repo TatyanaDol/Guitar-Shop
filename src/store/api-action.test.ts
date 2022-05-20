@@ -6,7 +6,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { createAPI } from '../services/api';
 import { fetchGuitarsAction, fetchOneGuitarCardAction, addNewCommentAction } from './api-action';
 import { makeFakeGuitarData } from '../utils/mocks';
-import { APIRoute } from '../const';
+import { API_ROUTE } from '../const';
 
 
 describe('Async actions', () => {
@@ -107,7 +107,7 @@ describe('Async actions', () => {
       },
     ];
 
-    mockAPI.onGet(APIRoute.Comments).reply(200, mockGuitar);
+    mockAPI.onGet(API_ROUTE.Comments).reply(200, mockGuitar);
 
     await mockStore.dispatch(addNewCommentAction(fakeNewCommentData));
 

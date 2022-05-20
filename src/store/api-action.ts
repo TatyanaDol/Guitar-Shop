@@ -3,7 +3,7 @@ import {api} from './api/api';
 import {store} from './index';
 import {loadGuitars, loadOneGuitarCard, loadPostedComment} from './guitars-data-process/guitars-data-process';
 import { loadTotalGuitarsCount } from './site-process/site-process';
-import { APIRoute } from '../const';
+import { API_ROUTE } from '../const';
 import { NewCommentData } from '../types/guitar';
 import { handleError } from '../services/handle-error';
 
@@ -44,7 +44,7 @@ export const addNewCommentAction = createAsyncThunk(
   'addNewComment',
   async ({comment, setIsSavingCb, setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedCb}: NewCommentData) => {
     try {
-      const {data} = await api.post(APIRoute.Comments, {...comment});
+      const {data} = await api.post(API_ROUTE.Comments, {...comment});
       store.dispatch(loadPostedComment(data));
       setIsSavingCb(false);
       setIsFormModalOpenedCb(false);
