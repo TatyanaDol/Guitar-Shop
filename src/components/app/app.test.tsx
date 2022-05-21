@@ -21,7 +21,7 @@ describe('Application Routing', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
       },
-      SITE: {totalGuitarsCount: 0},
+      SITE: {totalGuitarsCount: 0, isError404: false},
     });
 
     const history = createMemoryHistory();
@@ -48,7 +48,7 @@ describe('Application Routing', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
       },
-      SITE: {totalGuitarsCount: 2},
+      SITE: {totalGuitarsCount: 2, isError404: false},
     });
 
     const history = createMemoryHistory();
@@ -74,7 +74,7 @@ describe('Application Routing', () => {
         oneGuitarCard: makeFakeGuitarData(),
         isOneGuitarCardDataLoaded: true,
       },
-      SITE: {totalGuitarsCount: 0},
+      SITE: {totalGuitarsCount: 0, isError404: false},
     });
 
     const history = createMemoryHistory();
@@ -101,7 +101,7 @@ describe('Application Routing', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
       },
-      SITE: {totalGuitarsCount: 0},
+      SITE: {totalGuitarsCount: 0, isError404: false},
     });
 
     const history = createMemoryHistory();

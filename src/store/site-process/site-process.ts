@@ -5,6 +5,7 @@ import {SiteProcess} from '../../types/state';
 
 const initialState: SiteProcess = {
   totalGuitarsCount: 0,
+  isError404: false,
 };
 
 export const siteProcess = createSlice({
@@ -19,7 +20,15 @@ export const siteProcess = createSlice({
         state.totalGuitarsCount = TOTAL_COUNT;
       }
     },
+    loadIsError404: (state, action) => {
+      if(action.payload === 404) {
+        state.isError404 = true;
+      }
+      else {
+        state.isError404 = false;
+      }
+    },
   },
 });
 
-export const {loadTotalGuitarsCount} = siteProcess.actions;
+export const {loadTotalGuitarsCount, loadIsError404} = siteProcess.actions;

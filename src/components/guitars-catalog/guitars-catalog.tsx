@@ -14,7 +14,6 @@ import { AppRoute } from '../../const';
 function GuitarsCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
-
   const {slug} = useParams();
 
   const guitarsList = useAppSelector(getGuitars);
@@ -22,9 +21,7 @@ function GuitarsCatalog(): JSX.Element {
   const totalGuitarsCount = useAppSelector(getTotalGuitarsCount);
 
   useEffect( () => {
-
     dispatch(fetchGuitarsAction(slug));
-
 
   }, [slug]);
 

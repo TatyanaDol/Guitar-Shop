@@ -10,6 +10,7 @@ export type GuitarsDataProcess = {
 
 export type SiteProcess = {
     totalGuitarsCount: number
+    isError404: boolean
   };
 
 export type State = ReturnType<typeof store.getState>;

@@ -1,6 +1,9 @@
 import request from 'axios';
 import {toast} from 'react-toastify';
 import { HttpCode } from '../const';
+import { store } from '../store';
+import { loadIsError404 } from '../store/site-process/site-process';
+
 
 export const handleError = (error: unknown): void => {
 
@@ -17,7 +20,7 @@ export const handleError = (error: unknown): void => {
         toast.error(error.message);
         break;
       case HttpCode.Not_found:
-        toast.error(error.message);
+        store.dispatch(loadIsError404(response.status));
         break;
     }
   }

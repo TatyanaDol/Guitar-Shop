@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './api/api';
 import {store} from './index';
 import {loadGuitars, loadOneGuitarCard, loadPostedComment} from './guitars-data-process/guitars-data-process';
-import { loadTotalGuitarsCount } from './site-process/site-process';
+import { loadIsError404, loadTotalGuitarsCount } from './site-process/site-process';
 import { API_ROUTE } from '../const';
 import { NewCommentData } from '../types/guitar';
 import { handleError } from '../services/handle-error';
@@ -33,6 +33,7 @@ export const fetchOneGuitarCardAction = createAsyncThunk(
     try {
       const {data} = await api.get(`/guitars/${guitarId}?_embed=comments`);
       store.dispatch(loadOneGuitarCard(data));
+      store.dispatch(loadIsError404(data.status));
     } catch (error) {
       store.dispatch(loadOneGuitarCard(null));
       handleError(error);
