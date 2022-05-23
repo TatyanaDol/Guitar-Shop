@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { RATING } from '../../const';
 import {GuitarData} from '../../types/guitar';
+import { getGuitarImgForSrcSet } from '../../utils/utils';
 import RatingStar from '../rating-start/rating-star';
 
 type GuitarCardProps = {
@@ -9,10 +10,9 @@ type GuitarCardProps = {
 
 function GuitarCard({guitar}: GuitarCardProps): JSX.Element {
 
-
   return (
     <div className="product-card">
-      <img src={`/${guitar.previewImg}`} srcSet="img/content/catalog-product-0@2x.jpg 2x" width="75" height="190" alt={guitar.name} />
+      <img src={`/${guitar.previewImg}`} srcSet={`/${getGuitarImgForSrcSet(guitar.previewImg)}@2x.jpg 2x`} width="75" height="190" alt={guitar.name} />
       <div className="product-card__info">
         <div className="rate product-card__rate">
           <RatingStar ratingNumber={guitar.rating}/>

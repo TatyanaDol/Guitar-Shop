@@ -1,5 +1,6 @@
 import { RATING} from '../../const';
 import { GuitarData } from '../../types/guitar';
+import { getGuitarImgForSrcSet } from '../../utils/utils';
 import ProductTabs from '../product-tabs/product-tabs';
 import RatingStar from '../rating-start/rating-star';
 
@@ -9,7 +10,7 @@ type ProductProps = {
 
 function Product({guitar}: ProductProps): JSX.Element {
   return (
-    <div className="product-container"><img className="product-container__img" src={`/${guitar.previewImg}`} srcSet="img/content/catalog-product-2@2x.jpg 2x" width="90" height="235" alt={guitar.name}/>
+    <div className="product-container"><img className="product-container__img" src={`/${guitar.previewImg}`} srcSet={`/${getGuitarImgForSrcSet(guitar.previewImg)}@2x.jpg 2x`} width="90" height="235" alt={guitar.name}/>
       <div className="product-container__info-wrapper">
         <h2 className="product-container__title title title--big title--uppercase">{guitar.name}</h2>
         <div className="rate product-container__rating">
