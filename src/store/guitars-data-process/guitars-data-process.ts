@@ -8,6 +8,7 @@ const initialState: GuitarsDataProcess = {
   isGuitarsDataLoaded: false,
   oneGuitarCard: null,
   isOneGuitarCardDataLoaded: false,
+  searchResultGuitars: [],
 };
 
 export const guitarsDataProcess = createSlice({
@@ -27,7 +28,10 @@ export const guitarsDataProcess = createSlice({
         state.oneGuitarCard.comments = [action.payload, ...state.oneGuitarCard.comments];
       }
     },
+    loadSearchResultGuitars: (state, action) => {
+      state.searchResultGuitars = action.payload;
+    },
   },
 });
 
-export const {loadGuitars, loadOneGuitarCard, loadPostedComment} = guitarsDataProcess.actions;
+export const {loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars} = guitarsDataProcess.actions;

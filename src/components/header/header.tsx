@@ -1,3 +1,4 @@
+import SearchForm from '../search-form/search-form';
 
 function Header(): JSX.Element {
   return (
@@ -16,7 +17,8 @@ function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className="form-search">
+        <SearchForm />
+        {/* <div className="form-search">
           <form className="form-search__form" id="form-search">
             <button className="form-search__submit" type="submit">
               <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
@@ -39,7 +41,7 @@ function Header(): JSX.Element {
               <use xlinkHref="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
-        </div>
+        </div> */}
         <a className="header__cart-link" href="#" aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>

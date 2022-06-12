@@ -6,6 +6,7 @@ export type GuitarsDataProcess = {
     isGuitarsDataLoaded: boolean
     oneGuitarCard: GuitarData | null
     isOneGuitarCardDataLoaded: boolean
+    searchResultGuitars: GuitarsData,
   };
 
 export type SiteProcess = {

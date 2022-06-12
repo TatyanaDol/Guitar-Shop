@@ -6,3 +6,4 @@ export const getGuitars = (state: State): GuitarsData => state[NameSpace.Data].g
 export const getGuitarsDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].isGuitarsDataLoaded;
 export const getOneGuitarCard = (state: State): GuitarData | null => state[NameSpace.Data].oneGuitarCard;
 export const getOneGuitarCardDataLoadedStatus = (state: State): boolean => state[NameSpace.Data].isOneGuitarCardDataLoaded;
+export const getSearchResultGuitars = (state: State): GuitarsData => state[NameSpace.Data].searchResultGuitars;

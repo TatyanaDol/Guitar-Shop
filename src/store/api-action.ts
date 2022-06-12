@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './api/api';
 import {store} from './index';
-import {loadGuitars, loadOneGuitarCard, loadPostedComment} from './guitars-data-process/guitars-data-process';
+import {loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars} from './guitars-data-process/guitars-data-process';
 import { loadIsError404, loadTotalGuitarsCount } from './site-process/site-process';
 import { API_ROUTE } from '../const';
 import { NewCommentData } from '../types/guitar';
@@ -52,6 +52,24 @@ export const addNewCommentAction = createAsyncThunk(
       setIsSuccessReviewModalOpenedCb(true);
     } catch(error) {
       setIsSavingCb(false);
+      handleError(error);
+    }
+  },
+);
+
+export const fetchSearchResultGuitarsAction = createAsyncThunk(
+  'fetchSearchResultGuitars',
+  async (searchData: string) => {
+    if(!searchData) {
+      store.dispatch(loadSearchResultGuitars([]));
+      return;
+    }
+    try {
+      const {data} = await api.get(`/guitars?name_like=${searchData}`);
+      store.dispatch(loadSearchResultGuitars(data));
+      // store.dispatch(loadIsError404(data.status));
+    } catch (error) {
+      store.dispatch(loadSearchResultGuitars([]));
       handleError(error);
     }
   },
