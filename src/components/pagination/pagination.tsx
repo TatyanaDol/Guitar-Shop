@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 type PaginationProps = {
@@ -9,6 +9,7 @@ type PaginationProps = {
 function Pagination({totalGuitarsCount}: PaginationProps): JSX.Element {
 
   const {slug} = useParams();
+  const location = useLocation();
 
   let pageId = slug;
 
@@ -23,18 +24,18 @@ function Pagination({totalGuitarsCount}: PaginationProps): JSX.Element {
       <ul className="pagination__list">
         {
           pageId !== '1' &&
-              <li className="pagination__page pagination__page--prev" id="prev"><Link  to={`/catalog/page_${Number(pageId) - 1}`} className="link pagination__page-link" >Назад</Link>
+              <li className="pagination__page pagination__page--prev" id="prev"><Link  to={`/catalog/page_${Number(pageId) - 1}${location.search}`} className="link pagination__page-link" >Назад</Link>
               </li>
         }
 
         {
           Array.from({ length: pagesCount }, (v, k) => k).map((_, ind) => (
-            <li key={_} className={`pagination__page ${ind + 1 === Number(pageId) && 'pagination__page--active'}`} data-testid="page"><Link to={`/catalog/page_${ind + 1}`} className="link pagination__page-link" >{ind + 1}</Link>
+            <li key={_} className={`pagination__page ${ind + 1 === Number(pageId) && 'pagination__page--active'}`} data-testid="page"><Link to={`/catalog/page_${ind + 1}${location.search}`} className="link pagination__page-link" >{ind + 1}</Link>
             </li>
           ))
         }
         {Number(pageId) !== pagesCount &&
-        <li className="pagination__page pagination__page--next" id="next"><Link  to={`/catalog/page_${Number(pageId) + 1}`} className="link pagination__page-link" >Далее</Link>
+        <li className="pagination__page pagination__page--next" id="next"><Link  to={`/catalog/page_${Number(pageId) + 1}${location.search}`} className="link pagination__page-link" >Далее</Link>
         </li>}
       </ul>
     </div>

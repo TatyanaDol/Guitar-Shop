@@ -5,25 +5,36 @@ import {getGuitars, getGuitarsDataLoadedStatus} from '../../store/guitars-data-p
 import GuitarsCardsList from '../guitars-cards-list/guitars-cards-list';
 import { getTotalGuitarsCount } from '../../store/site-process/selector';
 import Pagination from '../pagination/pagination';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import CatalogSort from '../catalog-sort/catalog-sort';
 
 
 function GuitarsCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const {slug} = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const guitarsList = useAppSelector(getGuitars);
   const isGuitarsDataLoaded = useAppSelector(getGuitarsDataLoadedStatus);
   const totalGuitarsCount = useAppSelector(getTotalGuitarsCount);
 
   useEffect( () => {
-    dispatch(fetchGuitarsAction(slug));
+    let sortQuery = searchParams.get('_sort');
+    const orderQuery = searchParams.get('_order');
 
-  }, [slug]);
+    if(!(sortQuery) && orderQuery) {
+      searchParams.set('_sort', 'price');
+      setSearchParams(searchParams);
+      sortQuery = searchParams.get('_sort');
+    }
+
+    dispatch(fetchGuitarsAction({slug, sortQuery, orderQuery}));
+
+  }, [slug, searchParams]);
 
 
   return (
@@ -88,17 +99,7 @@ function GuitarsCatalog(): JSX.Element {
             </fieldset>
             <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset">Очистить</button>
           </form>
-          <div className="catalog-sort">
-            <h2 className="catalog-sort__title">Сортировать:</h2>
-            <div className="catalog-sort__type">
-              <button className="catalog-sort__type-button" aria-label="по цене">по цене</button>
-              <button className="catalog-sort__type-button" aria-label="по популярности">по популярности</button>
-            </div>
-            <div className="catalog-sort__order">
-              <button className="catalog-sort__order-button catalog-sort__order-button--up" aria-label="По возрастанию"></button>
-              <button className="catalog-sort__order-button catalog-sort__order-button--down" aria-label="По убыванию"></button>
-            </div>
-          </div>
+          <CatalogSort />
 
           {
             !isGuitarsDataLoaded ? <LoadingScreen />

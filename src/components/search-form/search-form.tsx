@@ -67,7 +67,7 @@ function SearchForm(): JSX.Element {
       <ul className={`form-search__select-list ${(serchResultGuitars[0]) ? 'list-opened' : 'hidden'} `} onClick={(evt) => handleSelectListClick(evt)} onKeyDown={(evt) => handleEnterKeydown(evt)}>
         {serchResultGuitars.map((serchedGuitar, insx) => <li key={serchedGuitar.id} className="form-search__select-item" data-guitarid={serchedGuitar.id} tabIndex={0}>{serchedGuitar.name}</li>)}
       </ul>
-      <button className="form-search__reset" type="reset" form="form-search">
+      <button className="form-search__reset" style={ {display: searchInputValue ? 'block' : 'none'}} type="reset" form="form-search">
         <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg><span className="visually-hidden">Сбросить поиск</span>
