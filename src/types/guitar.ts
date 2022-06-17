@@ -44,3 +44,16 @@ export type NewCommentData = {
 
 
 }
+
+export type GuitarTypesChecked = {
+    acoustic: boolean,
+    electric: boolean,
+    ukulele: boolean,
+}
+
+export type StringsCountChecked = {
+    4: boolean,
+    6: boolean,
+    7: boolean,
+    12: boolean,
+}

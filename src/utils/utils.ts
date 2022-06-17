@@ -1,4 +1,4 @@
-import { CommentsData } from '../types/guitar';
+import { CommentsData, GuitarTypesChecked, StringsCountChecked} from '../types/guitar';
 
 export function sortReviewsByDate(reviews: CommentsData) {
 
@@ -13,4 +13,18 @@ export function sortReviewsByDate(reviews: CommentsData) {
 export function getGuitarImgForSrcSet(guitarImg: string) {
   const imgForSrcSet = guitarImg.split('.')[0];
   return imgForSrcSet;
+}
+
+export function makeAPiaceOfReuestURL(key: string, obj: StringsCountChecked | GuitarTypesChecked) {
+
+  let URLPart = '';
+  const data = Object.entries(obj);
+
+  data.forEach((element) => {
+    if(element[1]) {
+      URLPart = URLPart.concat(key, element[0]);
+    }
+  });
+
+  return URLPart;
 }

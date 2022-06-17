@@ -2,26 +2,31 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from './api/api';
 import {store} from './index';
 import {loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars} from './guitars-data-process/guitars-data-process';
-import { loadIsError404, loadTotalGuitarsCount } from './site-process/site-process';
+import { loadIsError404, loadMaxAndMinPrice, loadTotalGuitarsCount } from './site-process/site-process';
 import { API_ROUTE } from '../const';
-import { NewCommentData } from '../types/guitar';
+import { GuitarTypesChecked, NewCommentData, StringsCountChecked } from '../types/guitar';
 import { handleError } from '../services/handle-error';
+import { makeAPiaceOfReuestURL } from '../utils/utils';
 
 type fetchGuitarsData = {
   slug: string | undefined
   sortQuery: string | null
   orderQuery: string | null
+  priceFromQuery: string | null
+  priceToQuery: string | null
+  guitarsTypesChecked: GuitarTypesChecked
+  stringsCount: StringsCountChecked
 }
 
 export const fetchGuitarsAction = createAsyncThunk(
   'fetchGuitars',
-  async ({slug, sortQuery, orderQuery}: fetchGuitarsData) => {
+  async ({slug, sortQuery, orderQuery, priceFromQuery, priceToQuery, guitarsTypesChecked, stringsCount}: fetchGuitarsData) => {
     let startCount = 0;
     if(slug) {
       startCount = Number(slug) * 9 - 9;
     }
     try {
-      const result = await api.get(`/guitars?_embed=comments&_start=${startCount}&_limit=9${sortQuery ? `&_sort=${sortQuery}` : ''}${orderQuery ? `&_order=${orderQuery}` : ''}`);
+      const result = await api.get(`/guitars?_embed=comments&_start=${startCount}&_limit=9${sortQuery ? `&_sort=${sortQuery}` : ''}${orderQuery ? `&_order=${orderQuery}` : ''}${priceFromQuery ? `&price_gte=${priceFromQuery}` : ''}${priceToQuery ? `&price_lte=${priceToQuery}` : ''}${makeAPiaceOfReuestURL('&type=', guitarsTypesChecked)}${makeAPiaceOfReuestURL('&stringCount=', stringsCount)}`);
       store.dispatch(loadGuitars(result.data));
       const resultHeaders = result.headers;
       store.dispatch(loadTotalGuitarsCount(resultHeaders['x-total-count']));
@@ -72,9 +77,21 @@ export const fetchSearchResultGuitarsAction = createAsyncThunk(
     try {
       const {data} = await api.get(`/guitars?name_like=${searchData}`);
       store.dispatch(loadSearchResultGuitars(data));
-      // store.dispatch(loadIsError404(data.status));
     } catch (error) {
       store.dispatch(loadSearchResultGuitars([]));
+      handleError(error);
+    }
+  },
+);
+
+export const fetchMaxAndMinPriceAction = createAsyncThunk(
+  'fetchMaxAndMinPrice',
+  async () => {
+    try {
+      const {data} = await api.get('/guitars?_sort=price');
+      store.dispatch(loadMaxAndMinPrice(data));
+    } catch (error) {
+      store.dispatch(loadMaxAndMinPrice([]));
       handleError(error);
     }
   },
