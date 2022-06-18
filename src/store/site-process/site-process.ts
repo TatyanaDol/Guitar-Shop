@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace, TOTAL_COUNT} from '../../const';
+import {HttpCode, NameSpace, TOTAL_COUNT} from '../../const';
 import {SiteProcess} from '../../types/state';
 
 
@@ -23,12 +23,8 @@ export const siteProcess = createSlice({
       }
     },
     loadIsError404: (state, action) => {
-      if(action.payload === 404) {
-        state.isError404 = true;
-      }
-      else {
-        state.isError404 = false;
-      }
+      state.isError404 = action.payload === HttpCode.Not_found;
+
     },
     loadMaxAndMinPrice: (state, action) => {
       if(action.payload[0]) {
