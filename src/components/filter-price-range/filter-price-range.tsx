@@ -55,7 +55,7 @@ export default function FilterPriceRange({minPriceInputValue, setMinPriceInputVa
       <div className="catalog-filter__price-range">
         <div className="form-input">
           <label className="visually-hidden">Минимальная цена</label>
-          <input type="number" placeholder={minimumPrice} id="priceMin" name="от" min="0" value={minPriceInputValue}
+          <input type="number" placeholder={minimumPrice} id="priceMin" name="от" min="0" data-testid="from" value={minPriceInputValue}
             onChange={(evt) => {setMinPriceInputValue(evt.target.value);}}
             onBlur={() => {
               handleInputPriceMinimumBlur();
@@ -64,7 +64,7 @@ export default function FilterPriceRange({minPriceInputValue, setMinPriceInputVa
         </div>
         <div className="form-input">
           <label className="visually-hidden">Максимальная цена</label>
-          <input type="number" placeholder={maximumPrice} id="priceMax" name="до" min="0" value={maxPriceInputValue}
+          <input type="number" placeholder={maximumPrice} id="priceMax" name="до" min="0" data-testid="to" value={maxPriceInputValue}
             onChange={(evt) => {setMaxPriceInputValue(evt.target.value);}}
             onBlur={() => {
               handleInputPriceMaximumBlur();

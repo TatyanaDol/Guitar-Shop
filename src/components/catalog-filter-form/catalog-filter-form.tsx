@@ -13,8 +13,8 @@ export default function CatalogFilterForm() {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const maximumPrice = useAppSelector(getMaxGuitarPrice).toString();
-  const minimumPrice = useAppSelector(getMinGuitarPrice).toString();
+  const maximumPrice = useAppSelector(getMaxGuitarPrice);
+  const minimumPrice = useAppSelector(getMinGuitarPrice);
 
   const priceFromQuery = searchParams.get('price_gte');
   const priceToQuery = searchParams.get('price_lte');
@@ -31,7 +31,7 @@ export default function CatalogFilterForm() {
 
   useEffect(() => {
 
-    if(maximumPrice === '0'  && minimumPrice === '0') {
+    if(maximumPrice === 0  && minimumPrice === 0) {
       dispatch(fetchMaxAndMinPriceAction());
     }
 

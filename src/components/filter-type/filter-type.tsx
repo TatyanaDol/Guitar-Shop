@@ -66,7 +66,7 @@ export default function FilterType() {
     <fieldset className="catalog-filter__block">
       <legend className="catalog-filter__block-title">Тип гитар</legend>
       <div className="form-checkbox catalog-filter__block-item">
-        <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" checked={searchTypes.includes('acoustic')} disabled={!(typesSet.has('acoustic')) && !(searchTypes.includes('acoustic'))}
+        <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" data-testid="acoustic-checkbox" checked={searchTypes.includes('acoustic')} disabled={!(typesSet.has('acoustic')) && !(searchTypes.includes('acoustic'))}
           onChange={ (evt) =>
           {
             handleGuitarTypeCheckboxChange(evt);
@@ -75,7 +75,7 @@ export default function FilterType() {
         <label htmlFor="acoustic">Акустические гитары</label>
       </div>
       <div className="form-checkbox catalog-filter__block-item">
-        <input className="visually-hidden" type="checkbox" id="electric" name="electric" checked={searchTypes.includes('electric')} disabled={!(typesSet.has('electric'))}
+        <input className="visually-hidden" type="checkbox" id="electric" data-testid="electric-checkbox" name="electric" checked={searchTypes.includes('electric')} disabled={!(typesSet.has('electric'))}
           onChange={ (evt) =>
           {
             handleGuitarTypeCheckboxChange(evt);

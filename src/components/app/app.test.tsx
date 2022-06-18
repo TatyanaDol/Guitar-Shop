@@ -14,14 +14,22 @@ describe('Application Routing', () => {
 
     const mockStore = configureMockStore([...getDefaultMiddleware()]);
 
+    const mockSearchResult = [makeFakeGuitarData()];
+
     const store = mockStore({
       DATA: {
         guitars: [],
         isGuitarsDataLoaded: true,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
+        searchResultGuitars: mockSearchResult,
       },
-      SITE: {totalGuitarsCount: 0, isError404: false},
+      SITE: {
+        totalGuitarsCount: 0,
+        isError404: false,
+        maxGuitarPrice: 1700,
+        minGuitarPrice: 35000,
+      },
     });
 
     const history = createMemoryHistory();
@@ -41,14 +49,22 @@ describe('Application Routing', () => {
   it('should render catalog page when navigate to "/catalog/page_1"', () => {
     const mockStore = configureMockStore([...getDefaultMiddleware()]);
 
+    const mockSearchResult = [makeFakeGuitarData()];
+
     const store = mockStore({
       DATA: {
         guitars: [makeFakeGuitarData(), makeFakeGuitarData()],
         isGuitarsDataLoaded: true,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
+        searchResultGuitars: mockSearchResult,
       },
-      SITE: {totalGuitarsCount: 2, isError404: false},
+      SITE: {
+        totalGuitarsCount: 2,
+        isError404: false,
+        maxGuitarPrice: 1700,
+        minGuitarPrice: 35000,
+      },
     });
 
     const history = createMemoryHistory();
@@ -67,14 +83,22 @@ describe('Application Routing', () => {
   it('should render product page when navigate to "/product/1"', () => {
     const mockStore = configureMockStore([...getDefaultMiddleware()]);
 
+    const mockSearchResult = [makeFakeGuitarData()];
+
     const store = mockStore({
       DATA: {
         guitars: [],
         isGuitarsDataLoaded: false,
         oneGuitarCard: makeFakeGuitarData(),
         isOneGuitarCardDataLoaded: true,
+        searchResultGuitars: mockSearchResult,
       },
-      SITE: {totalGuitarsCount: 0, isError404: false},
+      SITE: {
+        totalGuitarsCount: 0,
+        isError404: false,
+        maxGuitarPrice: 1700,
+        minGuitarPrice: 35000,
+      },
     });
 
     const history = createMemoryHistory();

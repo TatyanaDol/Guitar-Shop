@@ -61,7 +61,7 @@ function SearchForm(): JSX.Element {
             <use xlinkHref="#icon-search"></use>
           </svg><span className="visually-hidden">Начать поиск</span>
         </button>
-        <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" onChange={(evt) => { handleSearchInputChange(evt.target.value); }}  />
+        <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" data-testid="search-input" onChange={(evt) => { handleSearchInputChange(evt.target.value); }}  />
         <label className="visually-hidden" htmlFor="search">Поиск</label>
       </form>
       <ul className={`form-search__select-list ${(serchResultGuitars[0]) ? 'list-opened' : 'hidden'} `} onClick={(evt) => handleSelectListClick(evt)} onKeyDown={(evt) => handleEnterKeydown(evt)}>

@@ -68,7 +68,7 @@ export default function FilterStrings() {
     <fieldset className="catalog-filter__block">
       <legend className="catalog-filter__block-title">Количество струн</legend>
       <div className="form-checkbox catalog-filter__block-item">
-        <input className="visually-hidden" type="checkbox" id="4-strings" name="4" checked={searchStringCount.includes('4')} disabled={!(stringsSet.has(4))}
+        <input className="visually-hidden" type="checkbox" id="4-strings" name="4"  checked={searchStringCount.includes('4')} disabled={!(stringsSet.has(4))}
           onChange={ (evt) =>
           {
             handleGuitarStringCountCheckboxChange(evt);
@@ -77,7 +77,7 @@ export default function FilterStrings() {
         <label htmlFor="4-strings">4</label>
       </div>
       <div className="form-checkbox catalog-filter__block-item">
-        <input className="visually-hidden" type="checkbox" id="6-strings" name="6"  checked={searchStringCount.includes('6')} disabled={!(stringsSet.has(6))}
+        <input className="visually-hidden" type="checkbox" id="6-strings" name="6" data-testid="6-strings" checked={searchStringCount.includes('6')} disabled={!(stringsSet.has(6))}
           onChange={ (evt) =>
           {
             handleGuitarStringCountCheckboxChange(evt);
@@ -95,7 +95,7 @@ export default function FilterStrings() {
         <label htmlFor="7-strings">7</label>
       </div>
       <div className="form-checkbox catalog-filter__block-item">
-        <input className="visually-hidden" type="checkbox" id="12-strings" name="12" checked={searchStringCount.includes('12')} disabled={!(stringsSet.has(12))}
+        <input className="visually-hidden" type="checkbox" id="12-strings" name="12"  data-testid="12-strings" checked={searchStringCount.includes('12')} disabled={!(stringsSet.has(12))}
           onChange={ (evt) =>
           {
             handleGuitarStringCountCheckboxChange(evt);

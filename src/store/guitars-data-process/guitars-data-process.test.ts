@@ -1,5 +1,5 @@
 import {makeFakeGuitarData, makeFakeReview} from '../../utils/mocks';
-import { guitarsDataProcess, loadGuitars, loadOneGuitarCard, loadPostedComment } from './guitars-data-process';
+import { guitarsDataProcess, loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars } from './guitars-data-process';
 
 const guitars = [makeFakeGuitarData(), makeFakeGuitarData()];
 const guitar = makeFakeGuitarData();
@@ -15,6 +15,7 @@ describe('Reducer: Data', () => {
         isGuitarsDataLoaded: false,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
+        searchResultGuitars: [],
       });
   });
   it('should update guitars by load guitars', () => {
@@ -23,6 +24,7 @@ describe('Reducer: Data', () => {
       isGuitarsDataLoaded: false,
       oneGuitarCard: null,
       isOneGuitarCardDataLoaded: false,
+      searchResultGuitars: [],
     };
     expect(guitarsDataProcess.reducer(state, loadGuitars(guitars)))
       .toEqual({
@@ -30,29 +32,59 @@ describe('Reducer: Data', () => {
         isGuitarsDataLoaded: true,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
+        searchResultGuitars: [],
       });
   });
   it('should update guitar by load guitar', () => {
-    const state = {guitars: [],
+    const state = {
+      guitars: [],
       isGuitarsDataLoaded: false,
       oneGuitarCard: null,
-      isOneGuitarCardDataLoaded: false};
+      isOneGuitarCardDataLoaded: false,
+      searchResultGuitars: [],
+    };
     expect(guitarsDataProcess.reducer(state, loadOneGuitarCard(guitar)))
-      .toEqual({guitars: [],
+      .toEqual({
+        guitars: [],
         isGuitarsDataLoaded: false,
         oneGuitarCard: guitar,
-        isOneGuitarCardDataLoaded: true});
+        isOneGuitarCardDataLoaded: true,
+        searchResultGuitars: [],
+      });
   });
   it('should update oneGuitarCard comments by load comment', () => {
-    const state = {guitars: [],
+    const state = {
+      guitars: [],
       isGuitarsDataLoaded: false,
       oneGuitarCard: guitar,
-      isOneGuitarCardDataLoaded: true};
+      isOneGuitarCardDataLoaded: true,
+      searchResultGuitars: [],
+    };
     expect(guitarsDataProcess.reducer(state, loadPostedComment(commentPost)))
-      .toEqual({guitars: [],
+      .toEqual({
+        guitars: [],
         isGuitarsDataLoaded: false,
         oneGuitarCard: guitarWithcommentPost,
-        isOneGuitarCardDataLoaded: true});
+        isOneGuitarCardDataLoaded: true,
+        searchResultGuitars: [],
+      });
+  });
+  it('should update searchResultGuitars by load guitars', () => {
+    const state = {
+      guitars: [],
+      isGuitarsDataLoaded: false,
+      oneGuitarCard: null,
+      isOneGuitarCardDataLoaded: false,
+      searchResultGuitars: [],
+    };
+    expect(guitarsDataProcess.reducer(state, loadSearchResultGuitars(guitars)))
+      .toEqual({
+        guitars: [],
+        isGuitarsDataLoaded: false,
+        oneGuitarCard: null,
+        isOneGuitarCardDataLoaded: false,
+        searchResultGuitars: guitars,
+      });
   });
 });
 

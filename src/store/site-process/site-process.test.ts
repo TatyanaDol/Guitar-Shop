@@ -1,5 +1,5 @@
 import {makeFakeGuitarData} from '../../utils/mocks';
-import { loadIsError404, loadTotalGuitarsCount, siteProcess } from './site-process';
+import { loadIsError404, loadMaxAndMinPrice, loadTotalGuitarsCount, siteProcess } from './site-process';
 
 const guitars = [makeFakeGuitarData(), makeFakeGuitarData()];
 const fakeResponseStatus = 404;
@@ -10,28 +10,53 @@ describe('Reducer: Data', () => {
       .toEqual({
         totalGuitarsCount: 0,
         isError404: false,
+        maxGuitarPrice: 0,
+        minGuitarPrice: 0,
       });
   });
   it('should update totalGuitarsCount by load x-total-count', () => {
     const state = {
       totalGuitarsCount: 0,
       isError404: false,
+      maxGuitarPrice: 0,
+      minGuitarPrice: 0,
     };
     expect(siteProcess.reducer(state, loadTotalGuitarsCount(guitars.length)))
       .toEqual({
         totalGuitarsCount: guitars.length,
         isError404: false,
+        maxGuitarPrice: 0,
+        minGuitarPrice: 0,
       });
   });
   it('should update isError404 by load response status', () => {
     const state = {
       totalGuitarsCount: 0,
       isError404: false,
+      maxGuitarPrice: 0,
+      minGuitarPrice: 0,
     };
     expect(siteProcess.reducer(state, loadIsError404(fakeResponseStatus)))
       .toEqual({
         totalGuitarsCount: 0,
         isError404: true,
+        maxGuitarPrice: 0,
+        minGuitarPrice: 0,
+      });
+  });
+  it('should update maxGuitarPrice and minGuitarPrice by load response data', () => {
+    const state = {
+      totalGuitarsCount: 0,
+      isError404: false,
+      maxGuitarPrice: 0,
+      minGuitarPrice: 0,
+    };
+    expect(siteProcess.reducer(state, loadMaxAndMinPrice(guitars)))
+      .toEqual({
+        totalGuitarsCount: 0,
+        isError404: false,
+        maxGuitarPrice: guitars[guitars.length - 1].price,
+        minGuitarPrice: guitars[0].price,
       });
   });
 });

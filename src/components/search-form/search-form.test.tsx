@@ -1,23 +1,22 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
-import {render, screen} from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Route, Router, Routes} from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { makeFakeGuitarData } from '../../utils/mocks';
-import GuitarsCatalog from './guitars-catalog';
+import SearchForm from './search-form';
 import * as Redux from 'react-redux';
+import userEvent from '@testing-library/user-event';
 
-describe('component: Pagination', () => {
 
-  it('Should render page 1 correctly', () => {
+describe('component: SearchForm', () => {
+  it('Renders SearchForm-component', () => {
+
     const mockGuitars = [makeFakeGuitarData(), makeFakeGuitarData()];
-    const mockSearchResult = [makeFakeGuitarData()];
     const history = createMemoryHistory();
-    const route = '/catalog/page_1';
-    history.push(route);
-
     const mockStore = configureMockStore([...getDefaultMiddleware()]);
+    const mockSearchResult = [makeFakeGuitarData()];
 
     const store = mockStore({
       DATA: {
@@ -28,12 +27,11 @@ describe('component: Pagination', () => {
         searchResultGuitars: mockSearchResult,
       },
       SITE: {
-        totalGuitarsCount: 2,
+        totalGuitarsCount: 0,
         isError404: false,
         maxGuitarPrice: 1700,
         minGuitarPrice: 35000,
       },
-
     });
 
     const dispatch = jest.fn();
@@ -43,23 +41,19 @@ describe('component: Pagination', () => {
     render(
       <Provider store={store}>
         <Router location={history.location} navigator={history}>
-          <Routes>
-            <Route path='/catalog/page_:slug'
-              element={
-                <GuitarsCatalog />
-              }
-            />
-          </Routes>
+          <SearchForm />
         </Router>
       </Provider>,
     );
 
+    userEvent.type(screen.getByTestId('search-input'), `${mockSearchResult[0].name}`);
+
+    expect(screen.getByDisplayValue(`${mockSearchResult[0].name}`)).toBeInTheDocument();
+
     expect(useDispatch).toBeCalled();
 
-    expect(screen.getByText(/Каталог гитар/i)).toBeInTheDocument();
-    expect(screen.getByText(/Фильтр/i)).toBeInTheDocument();
+    expect(screen.getByText(`${mockSearchResult[0].name}`)).toBeInTheDocument();
 
   });
-
 
 });
