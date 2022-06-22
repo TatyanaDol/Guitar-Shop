@@ -3,8 +3,12 @@ import { useSearchParams } from 'react-router-dom';
 import { EXISTING_STRINGS_COUNT, STRINGS_FOR_TYPES } from '../../const';
 import { StringsCountChecked } from '../../types/guitar';
 
+type FilterStringsProps = {
+  reset: boolean,
+  setResetCb: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export default function FilterStrings() {
+export default function FilterStrings({reset, setResetCb}: FilterStringsProps) {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,6 +24,20 @@ export default function FilterStrings() {
     7: searchStringCount.includes('7'),
     12: searchStringCount.includes('12'),
   });
+
+  useEffect(() => {
+    if(reset) {
+      setStringsCountChecked(
+        {
+          4: false,
+          6: false,
+          7: false,
+          12: false,
+        },
+      );
+      setResetCb(false);
+    }
+  }, [reset]);
 
   useEffect(() => {
 
@@ -38,6 +56,18 @@ export default function FilterStrings() {
         set.add(stringsNumber);
       });
       setStringsSet(set);
+    }
+
+    if((searchTypes.length < 2 && searchTypes[0] === 'acoustic')) {
+      setStringsCountChecked({...stringsCountChecked, 4: false});
+    }
+
+    if((searchTypes.length < 2 && searchTypes[0] === 'electric')) {
+      setStringsCountChecked({...stringsCountChecked, 12: false});
+    }
+
+    if((searchTypes.length < 2 && searchTypes[0] === 'ukulele')) {
+      setStringsCountChecked({...stringsCountChecked, 6: false, 7: false, 12: false});
     }
 
   }, [searchParams]);

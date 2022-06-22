@@ -1,6 +1,7 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
-import {fireEvent, render, screen} from '@testing-library/react';
+import { render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import {Route, Router, Routes} from 'react-router-dom';
@@ -97,7 +98,7 @@ describe('component: CatalogFilterForm', () => {
 
     const buttonReset = screen.getByText(/Очистить/i);
     expect(history.location.search).toEqual('?_sort=rating');
-    fireEvent.click(buttonReset);
+    userEvent.click(buttonReset);
     expect(history.location.search).toEqual('');
 
   });

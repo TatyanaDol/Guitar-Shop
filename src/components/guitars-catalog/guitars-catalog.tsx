@@ -3,9 +3,9 @@ import {fetchGuitarsAction} from '../../store/api-action';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import {getGuitars, getGuitarsDataLoadedStatus} from '../../store/guitars-data-process/selectors';
 import GuitarsCardsList from '../guitars-cards-list/guitars-cards-list';
-import { getTotalGuitarsCount } from '../../store/site-process/selector';
+import {  getTotalGuitarsCount } from '../../store/site-process/selector';
 import Pagination from '../pagination/pagination';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -22,6 +22,15 @@ function GuitarsCatalog(): JSX.Element {
   const guitarsList = useAppSelector(getGuitars);
   const isGuitarsDataLoaded = useAppSelector(getGuitarsDataLoadedStatus);
   const totalGuitarsCount = useAppSelector(getTotalGuitarsCount);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    navigate(`/catalog/page_1${location.search}`);
+
+  }, [searchParams]);
+
 
   useEffect( () => {
     let sortQuery = searchParams.get('_sort');
@@ -77,7 +86,7 @@ function GuitarsCatalog(): JSX.Element {
             !isGuitarsDataLoaded ? <LoadingScreen />
               :
               <>
-                {guitarsList[0] && <GuitarsCardsList guitars={guitarsList} />}
+                {guitarsList[0] ? <GuitarsCardsList guitars={guitarsList} /> : <p>По вашему запросу ничего не найдено</p>}
 
                 <Pagination totalGuitarsCount={totalGuitarsCount} />
               </>

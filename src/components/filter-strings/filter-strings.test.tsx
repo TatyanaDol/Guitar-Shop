@@ -8,6 +8,7 @@ describe('component: FilterStrings', () => {
     const history = createMemoryHistory();
     const route = '/catalog/page_1?type=electric';
     history.push(route);
+    const setResetCb = jest.fn();
 
 
     render(
@@ -15,7 +16,9 @@ describe('component: FilterStrings', () => {
         <Routes>
           <Route path='/catalog/page_:slug'
             element={
-              <FilterStrings />
+              <FilterStrings reset={false}
+                setResetCb={setResetCb}
+              />
             }
           />
         </Routes>
@@ -32,14 +35,16 @@ describe('component: FilterStrings', () => {
     const history = createMemoryHistory();
     const route = '/catalog/page_1?type=electric';
     history.push(route);
-
+    const setResetCb = jest.fn();
 
     render(
       <Router location={history.location} navigator={history}>
         <Routes>
           <Route path='/catalog/page_:slug'
             element={
-              <FilterStrings />
+              <FilterStrings reset={false}
+                setResetCb={setResetCb}
+              />
             }
           />
         </Routes>

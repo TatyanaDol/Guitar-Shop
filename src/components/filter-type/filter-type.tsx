@@ -3,8 +3,12 @@ import { useSearchParams } from 'react-router-dom';
 import { EXISTING_TYPES_OF_GUITAR, TYPES_FOR_STRINGS } from '../../const';
 import { GuitarTypesChecked } from '../../types/guitar';
 
+type FilterTypeProps = {
+  reset: boolean,
+  setResetCb: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export default function FilterType() {
+export default function FilterType({reset, setResetCb }: FilterTypeProps) {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -12,6 +16,25 @@ export default function FilterType() {
   const searchStringCount = searchParams.getAll('stringCount');
 
   const [typesSet, setTypesSet] = useState(new Set<string>());
+
+  const [guitarTypes, setGuitarTypes] = useState({
+    acoustic: searchTypes.includes('acoustic'),
+    electric: searchTypes.includes('electric'),
+    ukulele: searchTypes.includes('ukulele'),
+  });
+
+  useEffect(() => {
+    if(reset) {
+      setGuitarTypes(
+        {
+          acoustic: false,
+          electric: false,
+          ukulele: false,
+        },
+      );
+      setResetCb(false);
+    }
+  }, [reset]);
 
   useEffect(() => {
 
@@ -34,11 +57,6 @@ export default function FilterType() {
 
   }, [searchParams]);
 
-  const [guitarTypes, setGuitarTypes] = useState({
-    acoustic: searchTypes.includes('acoustic'),
-    electric: searchTypes.includes('electric'),
-    ukulele: searchTypes.includes('ukulele'),
-  });
 
   function deleteAndAppendTypesInSearchParams(types: GuitarTypesChecked) {
     searchParams.delete('type');

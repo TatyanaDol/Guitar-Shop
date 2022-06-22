@@ -185,10 +185,26 @@ describe('Async actions', () => {
       },
     ];
 
+    const guitarsTypesChecked = {
+      ukulele: false,
+      electric: false,
+      acoustic: false,
+    };
+
+    const priceFrom = null;
+    const priceTo = null;
+
+    const stringsCount = {
+      4: false,
+      6: false,
+      7: false,
+      12: false,
+    };
+
 
     mockAPI.onGet('/guitars?_sort=price').reply(200, mockGuitars);
 
-    await mockStore.dispatch(fetchMaxAndMinPriceAction());
+    await mockStore.dispatch(fetchMaxAndMinPriceAction({priceFrom, priceTo, guitarsTypesChecked, stringsCount}));
 
     const actions = mockStore.getActions().map((action) => ({
       type: action.type,

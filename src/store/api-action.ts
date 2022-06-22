@@ -18,6 +18,14 @@ type fetchGuitarsData = {
   stringsCount: StringsCountChecked
 }
 
+type fetchMaxAndMinPriceData = {
+  priceFrom: string | null
+  priceTo: string | null
+  guitarsTypesChecked: GuitarTypesChecked
+  stringsCount: StringsCountChecked
+}
+
+
 export const fetchGuitarsAction = createAsyncThunk(
   'fetchGuitars',
   async ({slug, sortQuery, orderQuery, priceFromQuery, priceToQuery, guitarsTypesChecked, stringsCount}: fetchGuitarsData) => {
@@ -86,9 +94,9 @@ export const fetchSearchResultGuitarsAction = createAsyncThunk(
 
 export const fetchMaxAndMinPriceAction = createAsyncThunk(
   'fetchMaxAndMinPrice',
-  async () => {
+  async ({priceFrom, priceTo, guitarsTypesChecked, stringsCount}: fetchMaxAndMinPriceData) => {
     try {
-      const {data} = await api.get('/guitars?_sort=price');
+      const {data} = await api.get(`/guitars?_sort=price${priceFrom ? `&price_gte=${priceFrom}` : ''}${priceTo ? `&price_lte=${priceTo}` : ''}${makeAPiaceOfReuestURL('&type=', guitarsTypesChecked)}${makeAPiaceOfReuestURL('&stringCount=', stringsCount)}`);
       store.dispatch(loadMaxAndMinPrice(data));
     } catch (error) {
       store.dispatch(loadMaxAndMinPrice([]));
