@@ -26,12 +26,6 @@ function GuitarsCatalog(): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    navigate(`/catalog/page_1${location.search}`);
-
-  }, [searchParams]);
-
-
   useEffect( () => {
     let sortQuery = searchParams.get('_sort');
     const orderQuery = searchParams.get('_order');
@@ -66,6 +60,13 @@ function GuitarsCatalog(): JSX.Element {
     dispatch(fetchGuitarsAction({slug, sortQuery, orderQuery, priceFromQuery, priceToQuery, guitarsTypesChecked, stringsCount}));
 
   }, [slug, searchParams]);
+
+  useEffect(() => {
+    if(Number(slug) > 1) {
+      navigate(`/catalog/page_1${location.search}`);
+    }
+
+  }, [searchParams]);
 
 
   return (
