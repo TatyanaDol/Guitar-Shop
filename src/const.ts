@@ -20,6 +20,7 @@ export enum AppRoute {
     Main = '/',
     CatalogPage = '/catalog/page_:slug',
     ProductPage = '/product/:id',
+    CartPage = '/cart',
   }
 
 export enum HttpCode {

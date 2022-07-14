@@ -4,8 +4,8 @@ import { State } from '../types/state';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { createAPI } from '../services/api';
-import { fetchGuitarsAction, fetchOneGuitarCardAction, addNewCommentAction, fetchSearchResultGuitarsAction, fetchMaxAndMinPriceAction } from './api-action';
-import { makeFakeGuitarData } from '../utils/mocks';
+import { fetchGuitarsAction, fetchOneGuitarCardAction, addNewCommentAction, fetchSearchResultGuitarsAction, fetchMaxAndMinPriceAction, fetchGuitarForCartAction, fetchDiscountAction } from './api-action';
+import { makeFakeGuitarData, makeFakeGuitarDataForCart } from '../utils/mocks';
 import { API_ROUTE } from '../const';
 
 
@@ -212,6 +212,70 @@ describe('Async actions', () => {
     );
 
     expect(actions).toEqual(expectedActions);
+  });
+
+  it('should dispatch guitar for cart when server return 200', async () => {
+    const mockStore = fakeStore();
+
+    jest.mock('./index', () => mockStore);
+
+    const mockGuitar = makeFakeGuitarDataForCart();
+
+    const fakeFetchGuitarForCartData = {
+      guitarId: 1, setIsAddToCartModalOpenCb: () => null , setIsSuccessAddToCartModalOpenCb: () => null, setIsAddingCb : () => null };
+
+    const expectedActions = [
+      {
+        type: fetchGuitarForCartAction.pending.type,
+      },
+      {
+        type: fetchGuitarForCartAction.fulfilled.type,
+      },
+    ];
+
+    mockAPI.onGet('/guitars/1').reply(200, mockGuitar);
+
+    await mockStore.dispatch(fetchGuitarForCartAction(fakeFetchGuitarForCartData));
+
+    const actions = mockStore.getActions().map((action) => ({
+      type: action.type,
+    }),
+    );
+
+    expect(actions).toEqual(expectedActions);
+
+  });
+
+  it('should dispatch Discount when server return 200', async () => {
+    const mockStore = fakeStore();
+
+    jest.mock('./index', () => mockStore);
+
+    const mackDiscount = Math.floor(Math.random() * 100);
+
+    const fakeFetchDiscountData = {
+      promoCode: '1', setIsAddingCb: () => null , setIsValidCb: () => null};
+
+    const expectedActions = [
+      {
+        type: fetchDiscountAction.pending.type,
+      },
+      {
+        type: fetchDiscountAction.fulfilled.type,
+      },
+    ];
+
+    mockAPI.onGet('/coupons').reply(200, mackDiscount);
+
+    await mockStore.dispatch(fetchDiscountAction(fakeFetchDiscountData));
+
+    const actions = mockStore.getActions().map((action) => ({
+      type: action.type,
+    }),
+    );
+
+    expect(actions).toEqual(expectedActions);
+
   });
 
 });

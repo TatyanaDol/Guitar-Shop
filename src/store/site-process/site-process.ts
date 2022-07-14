@@ -8,6 +8,7 @@ const initialState: SiteProcess = {
   isError404: false,
   maxGuitarPrice: 0,
   minGuitarPrice: 0,
+  discount: 0,
 };
 
 export const siteProcess = createSlice({
@@ -35,7 +36,10 @@ export const siteProcess = createSlice({
         state.maxGuitarPrice = 0;
       }
     },
+    loadDiscount: (state, action) => {
+      state.discount = action.payload;
+    },
   },
 });
 
-export const {loadTotalGuitarsCount, loadIsError404, loadMaxAndMinPrice} = siteProcess.actions;
+export const {loadDiscount, loadTotalGuitarsCount, loadIsError404, loadMaxAndMinPrice} = siteProcess.actions;

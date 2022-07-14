@@ -9,6 +9,7 @@ const initialState: GuitarsDataProcess = {
   oneGuitarCard: null,
   isOneGuitarCardDataLoaded: false,
   searchResultGuitars: [],
+  guitarsInCart: [],
 };
 
 export const guitarsDataProcess = createSlice({
@@ -31,7 +32,42 @@ export const guitarsDataProcess = createSlice({
     loadSearchResultGuitars: (state, action) => {
       state.searchResultGuitars = action.payload;
     },
+    loadGuitarDataForCart: (state, action) => {
+      const newGuitarsInCart = [...state.guitarsInCart];
+      const guitar = {...action.payload};
+      const isIncludesIndex = newGuitarsInCart.findIndex((element) => element.id === guitar.id );
+      if(isIncludesIndex !== -1) {
+        newGuitarsInCart[isIncludesIndex].quantity = newGuitarsInCart[isIncludesIndex].quantity + 1;
+        state.guitarsInCart = newGuitarsInCart;
+      } else {
+        guitar.quantity = 1;
+        state.guitarsInCart = [guitar, ...state.guitarsInCart];
+      }
+    },
+    decrementGuitarQuantityInCart: (state, action) => {
+      const newGuitars = [...state.guitarsInCart];
+      const index = state.guitarsInCart.findIndex((element) => element.id === action.payload );
+      if(newGuitars[index].quantity > 1) {
+        newGuitars[index].quantity = newGuitars[index].quantity - 1;
+        state.guitarsInCart = [...newGuitars];
+      } else {
+        newGuitars.splice(index, 1);
+        state.guitarsInCart = [...newGuitars];
+      }
+    },
+    incrementGuitarQuantityInCart: (state, action) => {
+      const newGuitars = [...state.guitarsInCart];
+      const index = state.guitarsInCart.findIndex((element) => element.id === action.payload );
+      newGuitars[index].quantity = newGuitars[index].quantity + 1;
+      state.guitarsInCart = [...newGuitars];
+    },
+    deleteGuitarFromCart: (state, action) => {
+      const newGuitars = [...state.guitarsInCart];
+      const index = state.guitarsInCart.findIndex((element) => element.id === action.payload );
+      newGuitars.splice(index, 1);
+      state.guitarsInCart = [...newGuitars];
+    },
   },
 });
 
-export const {loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars} = guitarsDataProcess.actions;
+export const {decrementGuitarQuantityInCart, incrementGuitarQuantityInCart, deleteGuitarFromCart, loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars, loadGuitarDataForCart} = guitarsDataProcess.actions;

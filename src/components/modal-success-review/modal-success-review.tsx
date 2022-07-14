@@ -32,9 +32,11 @@ function ModalSuccessReview({setIsSuccessReviewModalOpenedCb}: ModalSuccessRevie
       document.addEventListener('keydown', handleEscKeydown);
     }
 
+    document.body.style.overflow = 'hidden';
+
     return () => {
       document.removeEventListener('keydown', handleEscKeydown);
-
+      document.body.style.overflow = 'unset';
       if(modaSuccesslOverlay) {
         modaSuccesslOverlay.removeEventListener('click', handleModalSuccessOverlayClick);
       }

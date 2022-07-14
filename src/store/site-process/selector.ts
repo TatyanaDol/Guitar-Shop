@@ -6,3 +6,4 @@ export const getTotalGuitarsCount = (state: State): number => state[NameSpace.Si
 export const getIsError404 = (state: State): boolean => state[NameSpace.Site].isError404;
 export const getMaxGuitarPrice = (state: State): number => state[NameSpace.Site].maxGuitarPrice;
 export const getMinGuitarPrice = (state: State): number => state[NameSpace.Site].minGuitarPrice;
+export const getDiscount = (state: State): number => state[NameSpace.Site].discount;

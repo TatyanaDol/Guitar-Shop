@@ -48,7 +48,6 @@ function ProductCard() {
             )
         }
 
-
       </div>
     </main>
   );

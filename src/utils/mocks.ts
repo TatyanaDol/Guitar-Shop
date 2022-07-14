@@ -1,5 +1,5 @@
 import {random, name, image} from 'faker';
-import { CommentData, GuitarData } from '../types/guitar';
+import { CommentData, GuitarData, GuitarInCartData } from '../types/guitar';
 
 
 export const makeFakeGuitarData = (): GuitarData => ({
@@ -28,3 +28,17 @@ export const makeFakeReview = (): CommentData => ({
   createAt: '2022-02-13T21:48:13.678Z',
   guitarId: Math.floor(Math.random() * 100),
 } as CommentData);
+
+export const makeFakeGuitarDataForCart = (): GuitarInCartData => ({
+
+  id: Math.floor(Math.random() * 100),
+  name: name.title(),
+  vendorCode: 'SO757575',
+  type: 'ukulele',
+  description: random.words(),
+  previewImg: image.imageUrl(),
+  stringCount: Math.floor(Math.random() * 7),
+  rating: Math.floor(Math.random() * 5),
+  price: Math.floor(Math.random() * 10000),
+
+} as GuitarInCartData);

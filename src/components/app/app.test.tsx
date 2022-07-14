@@ -23,12 +23,14 @@ describe('Application Routing', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
         searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
       },
       SITE: {
         totalGuitarsCount: 0,
         isError404: false,
         maxGuitarPrice: 1700,
         minGuitarPrice: 35000,
+        discount: 0,
       },
     });
 
@@ -58,12 +60,14 @@ describe('Application Routing', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
         searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
       },
       SITE: {
         totalGuitarsCount: 2,
         isError404: false,
         maxGuitarPrice: 1700,
         minGuitarPrice: 35000,
+        discount: 0,
       },
     });
 
@@ -92,12 +96,14 @@ describe('Application Routing', () => {
         oneGuitarCard: makeFakeGuitarData(),
         isOneGuitarCardDataLoaded: true,
         searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
       },
       SITE: {
         totalGuitarsCount: 0,
         isError404: false,
         maxGuitarPrice: 1700,
         minGuitarPrice: 35000,
+        discount: 0,
       },
     });
 
@@ -124,8 +130,13 @@ describe('Application Routing', () => {
         isGuitarsDataLoaded: true,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
+        guitarsInCart: [],
       },
-      SITE: {totalGuitarsCount: 0, isError404: false},
+      SITE: {totalGuitarsCount: 0,
+        isError404: false,
+        maxGuitarPrice: 1700,
+        minGuitarPrice: 35000,
+        discount: 0},
     });
 
     const history = createMemoryHistory();
@@ -144,4 +155,43 @@ describe('Application Routing', () => {
     expect(linkElement).toBeInTheDocument();
 
   });
+
+  it('should render Cart page  when navigate to "/cart"', () => {
+    const mockStore = configureMockStore([...getDefaultMiddleware()]);
+
+    const mockSearchResult = [makeFakeGuitarData()];
+
+    const store = mockStore({
+      DATA: {
+        guitars: [],
+        isGuitarsDataLoaded: false,
+        oneGuitarCard: makeFakeGuitarData(),
+        isOneGuitarCardDataLoaded: true,
+        searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
+      },
+      SITE: {
+        totalGuitarsCount: 0,
+        isError404: false,
+        maxGuitarPrice: 1700,
+        minGuitarPrice: 35000,
+        discount: 0,
+      },
+    });
+
+    const history = createMemoryHistory();
+    history.push('/cart');
+    render(
+      <Provider store={store}>
+        <Router location={history.location} navigator={history}>
+          <App />
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getByText(/Промокод на скидку/i)).toBeInTheDocument();
+    expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
+
+  });
+
 });

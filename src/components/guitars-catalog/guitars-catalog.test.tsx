@@ -26,12 +26,14 @@ describe('component: Pagination', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
         searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
       },
       SITE: {
         totalGuitarsCount: 2,
         isError404: false,
         maxGuitarPrice: 1700,
         minGuitarPrice: 35000,
+        discount: 0,
       },
 
     });

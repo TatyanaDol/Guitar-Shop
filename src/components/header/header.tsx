@@ -1,6 +1,12 @@
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { getGuitarsInCart } from '../../store/guitars-data-process/selectors';
 import SearchForm from '../search-form/search-form';
 
 function Header(): JSX.Element {
+
+  const guitarsInCartData = useAppSelector(getGuitarsInCart);
+
   return (
     <header className="header" id="header">
       <div className="container header__wrapper">
@@ -18,11 +24,11 @@ function Header(): JSX.Element {
           </ul>
         </nav>
         <SearchForm />
-        <a className="header__cart-link" href="#" aria-label="Корзина">
+        <Link to={'/cart'} className="header__cart-link" aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
-          </svg><span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count">2</span>
-        </a>
+          </svg><span className="visually-hidden">Перейти в корзину</span>{guitarsInCartData[0] ? <span className="header__cart-count">{guitarsInCartData.length}</span> : ''}
+        </Link>
       </div>
     </header>
   );

@@ -57,3 +57,19 @@ export type StringsCountChecked = {
     7: boolean,
     12: boolean,
 }
+
+
+export type GuitarInCartData = {
+    id: number
+    name: string
+    vendorCode: string
+    type: keyof typeof GUITAR_TYPE
+    description: string
+    previewImg: string
+    stringCount: number
+    rating: 1 | 2 | 3 | 4 | 5
+    price: number
+    quantity: number
+}
+
+export type GuitarsInCartData = GuitarInCartData[];

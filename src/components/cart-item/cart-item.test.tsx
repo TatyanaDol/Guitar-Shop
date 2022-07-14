@@ -1,15 +1,16 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
-import {fireEvent, render, screen} from '@testing-library/react';
+import { render, screen} from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Router, Routes} from 'react-router-dom';
-import { makeFakeGuitarData} from '../../utils/mocks';
-import GuitarCard from './guitar-card';
+import {  makeFakeGuitarDataForCart} from '../../utils/mocks';
+import CartItem from './cart-item';
 
-describe('component: GuitarCard', () => {
-  it('Renders GuitarCard-component', () => {
-    const mockGuitar = makeFakeGuitarData();
+describe('component: CartItem', () => {
+  it('Renders CartItem-component', () => {
+    const mockGuitar = makeFakeGuitarDataForCart();
+    mockGuitar.quantity = 1;
     const history = createMemoryHistory();
     history.push = jest.fn();
 
@@ -17,18 +18,18 @@ describe('component: GuitarCard', () => {
 
     const store = mockStore({
       DATA: {
-        guitars: [makeFakeGuitarData(), makeFakeGuitarData()],
+        guitars: [],
         isGuitarsDataLoaded: true,
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: false,
         searchResultGuitars: [],
-        guitarsInCart: [],
+        guitarsInCart: [mockGuitar],
       },
       SITE: {
         totalGuitarsCount: 0,
         isError404: false,
-        maxGuitarPrice: mockGuitar.price + 1000,
-        minGuitarPrice: mockGuitar.price,
+        maxGuitarPrice: 0,
+        minGuitarPrice: 0,
         discount: 0,
       },
     });
@@ -40,11 +41,7 @@ describe('component: GuitarCard', () => {
           <Routes>
             <Route
               path='/'
-              element={<GuitarCard guitar={mockGuitar}/>}
-            />
-            <Route
-              path={`/product/${mockGuitar.id}`}
-              element={<h1>Mock product</h1>}
+              element={<CartItem guitarInfo={mockGuitar}/>}
             />
           </Routes>
         </Router>,
@@ -52,18 +49,8 @@ describe('component: GuitarCard', () => {
     );
 
 
-    expect(screen.getByText(/Подробнее/i)).toBeInTheDocument();
-    expect(screen.getByText(/Купить/i)).toBeInTheDocument();
+    expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
     expect(screen.getByText(new RegExp(mockGuitar.name, 'i'))).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText(/Подробнее/i));
-
-    expect(history.push).toHaveBeenCalledWith(
-      {
-        hash: '',
-        pathname: `/product/${mockGuitar.id}`,
-        search: '',
-      }, undefined);
 
   });
 });

@@ -59,8 +59,8 @@ function MainLayout({children}: PropsWithChildren<Record<never, never>>): JSX.El
       <div className="wrapper">
         <Header />
         {children}
+        <Footer />
       </div>
-      <Footer />
 
     </>);
 }

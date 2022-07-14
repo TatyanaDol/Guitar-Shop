@@ -53,9 +53,11 @@ function ModalReviewForm({setIsSuccessReviewModalOpenedCb, setIsFormModalOpenedC
       document.addEventListener('keydown', handleEscKeydown);
     }
 
+    document.body.style.overflow = 'hidden';
+
     return () => {
       document.removeEventListener('keydown', handleEscKeydown);
-
+      document.body.style.overflow = 'unset';
       if(modalOverlay) {
         modalOverlay.removeEventListener('click', handleModalOverlayClick);
       }

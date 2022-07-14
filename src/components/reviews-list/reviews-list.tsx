@@ -23,13 +23,6 @@ function ReviewsList({reviews, guitarName, id}: ReviewsListProps): JSX.Element {
   const [isReviewFormModalOpened, setIsReviewFormModalOpened] = useState(false);
   const [isSuccessReviewModalOpened, setIsSuccessReviewModalOpened] = useState(false);
 
-  if(isReviewFormModalOpened || isSuccessReviewModalOpened) {
-    document.body.style.overflow = 'hidden';
-  }
-  else {
-    document.body.style.overflow = 'unset';
-  }
-
   useEffect(() => {
     setReviewsForRender(sortedReviews.slice(0, renderedReviewsCount));
     return () => {

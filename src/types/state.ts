@@ -1,5 +1,5 @@
 import {store} from '../store/index';
-import {GuitarData, GuitarsData} from './guitar';
+import {GuitarData, GuitarsData, GuitarsInCartData} from './guitar';
 
 export type GuitarsDataProcess = {
     guitars: GuitarsData
@@ -7,6 +7,7 @@ export type GuitarsDataProcess = {
     oneGuitarCard: GuitarData | null
     isOneGuitarCardDataLoaded: boolean
     searchResultGuitars: GuitarsData,
+    guitarsInCart: GuitarsInCartData,
   };
 
 export type SiteProcess = {
@@ -14,6 +15,7 @@ export type SiteProcess = {
     isError404: boolean
     maxGuitarPrice: number
     minGuitarPrice: number
+    discount: number
   };
 
 export type State = ReturnType<typeof store.getState>;

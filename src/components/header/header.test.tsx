@@ -22,10 +22,12 @@ describe('component: Header', () => {
         oneGuitarCard: null,
         isOneGuitarCardDataLoaded: true,
         searchResultGuitars: mockSearchResult,
+        guitarsInCart: [],
       },
       SITE: {totalGuitarsCount: 2},
       maxGuitarPrice: 1700,
       minGuitarPrice: 35000,
+      discount: 0,
     });
 
     render(
