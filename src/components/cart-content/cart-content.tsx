@@ -41,7 +41,9 @@ export default function CartContent() {
   function handlePromocodeInput(evt: React.ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
     if(!regexp.test(evt.target.value)) {
+      setIsValid(false);
       setCodeValidity('введите промокод без пробелов');
+      setCode(evt.target.value);
       return;
     }
     setCode(evt.target.value);
@@ -71,9 +73,20 @@ export default function CartContent() {
       setCodeValidity('Промокод принят');
     } else {
       if(!discount && !isValid) {
-        setCodeValidity('неверный промокод');
+
+        if(!regexp.test(code)) {
+          setCodeValidity('введите промокод без пробелов');
+        } else {
+          setCodeValidity('неверный промокод');
+        }
+
       } else {
-        setCodeValidity('');
+        if(!regexp.test(code)) {
+          setCodeValidity('введите промокод без пробелов');
+        } else {
+          setCodeValidity('');
+        }
+
       }
     }
 
@@ -110,8 +123,8 @@ export default function CartContent() {
               <form className="coupon__form" id="coupon-form" method="post" action="/" onSubmit={(evt) => handlePromoCodeFormSubmit(evt) }>
                 <div className="form-input coupon__input">
                   <label className="visually-hidden">Промокод</label>
-                  <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" onChange={(evt) => {handlePromocodeInput(evt);}} />
-                  <p className={`form-input__message ${discount && isValid ? 'form-input__message--success' : 'form-input__message--error'}`}>{codeValidity}</p>
+                  <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" onChange={(evt) => {handlePromocodeInput(evt);}} value={code}/>
+                  <p className={`form-input__message ${discount && isValid  ? 'form-input__message--success' : 'form-input__message--error'}`}>{codeValidity}</p>
                 </div>
                 <button type="submit" className="button button--big coupon__button" disabled={!code} >{isAdding ? <LoadingScreen /> : 'Применить' }</button>
               </form>
