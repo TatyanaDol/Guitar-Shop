@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getGuitarsInCart } from '../../store/guitars-data-process/selectors';
@@ -6,6 +7,19 @@ import SearchForm from '../search-form/search-form';
 function Header(): JSX.Element {
 
   const guitarsInCartData = useAppSelector(getGuitarsInCart);
+
+  const [count, setCount] = useState(0);
+
+  useEffect(( ) => {
+
+    const sum = guitarsInCartData.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.quantity,
+      0,
+    );
+
+    setCount(sum);
+
+  }, [guitarsInCartData]);
 
   return (
     <header className="header" id="header">
@@ -27,7 +41,7 @@ function Header(): JSX.Element {
         <Link to={'/cart'} className="header__cart-link" aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
-          </svg><span className="visually-hidden">Перейти в корзину</span>{guitarsInCartData[0] ? <span className="header__cart-count">{guitarsInCartData.length}</span> : ''}
+          </svg><span className="visually-hidden">Перейти в корзину</span>{guitarsInCartData[0] ? <span className="header__cart-count">{count}</span> : ''}
         </Link>
       </div>
     </header>

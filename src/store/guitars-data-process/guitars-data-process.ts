@@ -67,7 +67,14 @@ export const guitarsDataProcess = createSlice({
       newGuitars.splice(index, 1);
       state.guitarsInCart = [...newGuitars];
     },
+    setNewGuitarQuantityInCart: (state, action) => {
+      const {id, count} = action.payload;
+      const newGuitars = [...state.guitarsInCart];
+      const index = state.guitarsInCart.findIndex((element) => element.id === id );
+      newGuitars[index].quantity = count;
+      state.guitarsInCart = [...newGuitars];
+    },
   },
 });
 
-export const {decrementGuitarQuantityInCart, incrementGuitarQuantityInCart, deleteGuitarFromCart, loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars, loadGuitarDataForCart} = guitarsDataProcess.actions;
+export const {setNewGuitarQuantityInCart, decrementGuitarQuantityInCart, incrementGuitarQuantityInCart, deleteGuitarFromCart, loadGuitars, loadOneGuitarCard, loadPostedComment, loadSearchResultGuitars, loadGuitarDataForCart} = guitarsDataProcess.actions;

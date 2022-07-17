@@ -38,12 +38,24 @@ export default function CartContent() {
 
   const [code, setCode] = useState('');
 
+  function handlePromocodeInput(evt: React.ChangeEvent<HTMLInputElement>) {
+    evt.preventDefault();
+    if(!regexp.test(evt.target.value)) {
+      setIsValid(false);
+      setCodeValidity('введите промокод без пробелов');
+      return;
+    }
+    setCode(evt.target.value);
+    setCodeValidity('');
+  }
+
 
   function handlePromoCodeFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     if((evt.currentTarget['coupon'].value)) {
       if(!regexp.test(evt.currentTarget['coupon'].value)) {
         setIsValid(false);
+        setCodeValidity('неверный промокод');
         return;
       }
       setIsAdding(true);
@@ -70,7 +82,7 @@ export default function CartContent() {
 
   useEffect(() => {
     setTotalPrice(calculateTotalPrice(guitarsInCartData));
-    setDicountAmount(totalPrice * discount / 100);
+    setDicountAmount(calculateTotalPrice(guitarsInCartData) * discount / 100);
   }, [guitarsInCartData, discount, codeValidity]);
 
 
@@ -99,7 +111,7 @@ export default function CartContent() {
               <form className="coupon__form" id="coupon-form" method="post" action="/" onSubmit={(evt) => handlePromoCodeFormSubmit(evt) }>
                 <div className="form-input coupon__input">
                   <label className="visually-hidden">Промокод</label>
-                  <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" onChange={(evt) => {setCode(evt.target.value);}} />
+                  <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" onChange={(evt) => {handlePromocodeInput(evt);}} />
                   <p className={`form-input__message ${discount && isValid ? 'form-input__message--success' : 'form-input__message--error'}`}>{codeValidity}</p>
                 </div>
                 <button type="submit" className="button button--big coupon__button" disabled={!code} >{isAdding ? <LoadingScreen /> : 'Применить' }</button>
@@ -107,7 +119,7 @@ export default function CartContent() {
             </div>
             <div className="cart__total-info">
               <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span><span className="cart__total-value">{new Intl.NumberFormat('ru-RU').format(totalPrice)} ₽</span></p>
-              <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span><span className={`cart__total-value ${discount ? 'cart__total-value--bonus' : ''}`}>- {discount ? new Intl.NumberFormat('ru-RU').format(dicountAmount) : '0'} ₽</span></p>
+              <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span><span className={`cart__total-value ${dicountAmount ? 'cart__total-value--bonus' : ''}`}>{dicountAmount  ? `-${new Intl.NumberFormat('ru-RU').format(dicountAmount)}` : '0'} ₽</span></p>
               <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span><span className="cart__total-value cart__total-value--payment">{new Intl.NumberFormat('ru-RU').format(totalPrice - dicountAmount)} ₽</span></p>
               <button className="button button--red button--big cart__order-button">Оформить заказ</button>
             </div>
