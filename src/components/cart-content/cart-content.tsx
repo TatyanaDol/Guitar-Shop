@@ -41,7 +41,6 @@ export default function CartContent() {
   function handlePromocodeInput(evt: React.ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
     if(!regexp.test(evt.target.value)) {
-      setIsValid(false);
       setCodeValidity('введите промокод без пробелов');
       return;
     }
