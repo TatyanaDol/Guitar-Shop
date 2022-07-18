@@ -16,7 +16,7 @@ export default function CartItem({guitarInfo}: CartItemProps) {
 
   const [isModalDeleteItemOpen, setIsModalDeleteItemOpen] = useState(false);
 
-  const [guitarsCount, setGuitarsCount] = useState(1);
+  const [guitarsCount, setGuitarsCount] = useState(guitarInfo.quantity);
 
   const dispatch = useAppDispatch();
 
@@ -36,23 +36,54 @@ export default function CartItem({guitarInfo}: CartItemProps) {
     }
   }
 
-  function handleQuantityInput(evt: React.FormEvent<HTMLInputElement>) {
-    evt.preventDefault();
+  function handleQuantityInput(value: string) {
 
-    const target = evt.target as HTMLInputElement;
+    setGuitarsCount(Number(value));
+  }
+
+  function handleQuantityInputBlur(value: string) {
     if(countInputRef.current) {
-      if(Number(target.value) <= 99 && Number(target.value) > 0) {
-        dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: Number(target.value)}));
-        setGuitarsCount(Number(target.value));
-        countInputRef.current.setCustomValidity('');
-      } else if(Number(target.value) > 99 || Number(target.value) < 0) {
-
-        countInputRef.current.setCustomValidity('Введите число не более 99 и не менее 1');
-
+      if(Number(value) <= 99 && Number(value) > 0) {
+        dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: Number(value)}));
+        setGuitarsCount(Number(value));
       }
-      countInputRef.current.reportValidity();
+      else if(Number(value) > 99) {
+
+        dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: 99}));
+        setGuitarsCount(99);
+      }
+      else if(Number(value) <= 0) {
+
+        dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: 1}));
+        setGuitarsCount(1);
+      }
     }
   }
+
+
+  function handleQuantityInputEnterKeyUp(evt: React.KeyboardEvent<HTMLInputElement>) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      const target = evt.target as HTMLInputElement;
+      if(countInputRef.current) {
+        if(Number(target.value) <= 99 && Number(target.value) > 0) {
+          dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: Number(target.value)}));
+          setGuitarsCount(Number(target.value));
+        }
+        else if(Number(target.value) > 99) {
+
+          dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: 99}));
+          setGuitarsCount(99);
+        }
+        else if(Number(target.value) <= 0) {
+
+          dispatch(setNewGuitarQuantityInCart({id: guitarInfo.id, count: 1}));
+          setGuitarsCount(1);
+        }
+      }
+    }
+  }
+
 
   return (
     <>
@@ -76,7 +107,11 @@ export default function CartItem({guitarInfo}: CartItemProps) {
               <use xlinkHref="#icon-minus"></use>
             </svg>
           </button>
-          <input ref={countInputRef} className="quantity__input" type="number" placeholder={`${guitarInfo.quantity}`} id="2-count" name="2-count" max="99" value={guitarsCount} onInput={(evt) => handleQuantityInput(evt)}/>
+          <input ref={countInputRef} className="quantity__input" type="tel"  id="2-count" name="2-count" max="99" value={guitarsCount}
+            onChange={(evt) => {handleQuantityInput(evt.target.value);}}
+            onBlur={(evt) => {handleQuantityInputBlur(evt.target.value);}}
+            onKeyUp={(evt) => {handleQuantityInputEnterKeyUp(evt);}}
+          />
           <button className="quantity__button" aria-label="Увеличить количество" onClick={handleIncrementButtonClick}>
             <svg width="8" height="8" aria-hidden="true">
               <use xlinkHref="#icon-plus"></use>

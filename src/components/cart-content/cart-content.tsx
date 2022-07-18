@@ -24,8 +24,6 @@ export default function CartContent() {
 
   const dispatch = useAppDispatch();
 
-  const regexp = /^\S*$/;
-
   const discount = useAppSelector(getDiscount);
 
   const guitarsInCartData = useAppSelector(getGuitarsInCart);
@@ -40,28 +38,20 @@ export default function CartContent() {
 
   function handlePromocodeInput(evt: React.ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
-    if(!regexp.test(evt.target.value)) {
-      setIsValid(false);
-      setCodeValidity('введите промокод без пробелов');
-      setCode(evt.target.value);
-      return;
-    }
-    setCode(evt.target.value);
-    setCodeValidity('');
+    const promoCode = evt.target.value;
+    const promoCodeWithoutSpaces = promoCode.replaceAll(/\s/g,'');
+    setCode(promoCodeWithoutSpaces);
   }
 
 
   function handlePromoCodeFormSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     if((evt.currentTarget['coupon'].value)) {
-      if(!regexp.test(evt.currentTarget['coupon'].value)) {
-        setIsValid(false);
-        setCodeValidity('неверный промокод');
-        return;
-      }
+      const promoCode = evt.currentTarget['coupon'].value;
+      const promoCodeWithoutSpaces = promoCode.replaceAll(/\s/g,'');
       setIsAdding(true);
       dispatch(fetchDiscountAction({
-        promoCode: evt.currentTarget['coupon'].value,
+        promoCode: promoCodeWithoutSpaces,
         setIsAddingCb: setIsAdding,
         setIsValidCb: setIsValid,
       }));
@@ -74,18 +64,11 @@ export default function CartContent() {
     } else {
       if(!discount && !isValid) {
 
-        if(!regexp.test(code)) {
-          setCodeValidity('введите промокод без пробелов');
-        } else {
-          setCodeValidity('неверный промокод');
-        }
-
+        setCodeValidity('неверный промокод');
       } else {
-        if(!regexp.test(code)) {
-          setCodeValidity('введите промокод без пробелов');
-        } else {
-          setCodeValidity('');
-        }
+
+        setCodeValidity('');
+
 
       }
     }
